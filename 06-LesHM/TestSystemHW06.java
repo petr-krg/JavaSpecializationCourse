@@ -21,7 +21,6 @@ public class TestSystemHW06 {
         // Переменная для повторного запуска теста
         String startAgain;
 
-
         // Примечание - можете придумать как хранить всю информацию в одном массиве
         // Реализовал двумерный массив, последний элемент всегда вариант правильного ответа и
         // данная реализация не привязана к количеству вариантов ответа
@@ -46,23 +45,41 @@ public class TestSystemHW06 {
         };
 
         do {
-            int choiceAnswer;
+            int choiceAnswer = -1;
             String testAnswer = null;
+            boolean errorInputValue;
+            String errorChoiceAnswer;
             Scanner scanner = new Scanner(System.in);
             // Вывод вопроса и вариантов ответа на экран
             for (String[] strings : testArray) {
                 for (int j = 0; j < strings.length - 1; j++) {
                     System.out.println(strings[j]);
-                    // этот варинат проверки не нравиться, как то колхозно, но, что то не придумал как по феншую в jave
+                    // этот вариант проверки не нравиться, как то колхозно, но, что-то не придумал как по феншую в jave
                     if (j+1 == strings.length - 1) {
                         testAnswer = strings[j+1];
                     }
                 }
 
-
-                System.out.print("Ваш ответ: ");
-                // тут можно вставить проверки на правильный диапазон ответов
-                choiceAnswer = scanner.nextInt();
+                do {
+                    errorInputValue = true;
+                    System.out.print("Ваш ответ: ");
+                    if (scanner.hasNextInt()) {
+                        choiceAnswer = scanner.nextInt();
+                        if (choiceAnswer < 1 | choiceAnswer > strings.length - 2) {
+                            System.out.println("Вы ввели число в не диапазона от 1 до " + (strings.length - 2) + "!");
+                            System.out.println("\nВведите число в диапазоне от 1 до " + (strings.length - 2) +
+                                    "\n или <N> для завершения программы.");
+                        } else {
+                            errorInputValue = false;
+                        }
+                    } else {
+                        errorChoiceAnswer = scanner.next();
+                        if (errorChoiceAnswer.equalsIgnoreCase("n")) {
+                            System.exit(0);
+                        }
+                        System.out.println("Вы ввели не целое число");
+                    }
+                } while (errorInputValue);
 
                 if (strings[choiceAnswer].equalsIgnoreCase(testAnswer)) {
                     correctCount++;
