@@ -21,57 +21,59 @@ public class TestSystemHW06 {
         // Переменная для повторного запуска теста
         String startAgain;
 
+        String[] questions = {"A. Какой месяц короче всех?", "Б. Может ли страус назвать себя птицей?",
+                "В. Что с земли легко поднимешь, но далеко не закинешь?"};
 
-        // Примечание - можете придумать как хранить всю информацию в одном массиве
-        // Реализовал двумерный массив, последний элемент всегда вариант правильного ответа и
-        // данная реализация не привязана к количеству вариантов ответа
-        String[][] testArray = {
-                {"A. Какой месяц короче всех?",
-                        "1. Февраль",
-                        "2. Май",
-                        "3. Октябрь",
-                        "2. Май"},
-                {"Б. Может ли страус назвать себя птицей?",
-                        "1. Нет, так как он не умеет говорить",
-                        "2. Нет, так как он не летает",
-                        "3. Страус не птица",
-                        "4. Да он птица",
-                        "5. Да черт его знает))",
-                        "1. Нет, так как он не умеет говорить"},
-                {"В. Что с земли легко поднимешь, но далеко не закинешь?",
-                        "1. Песок",
-                        "2. Деревяшку",
-                        "3. Пух",
-                        "3. Пух"},
+        String[][] answerOptions = {
+                {"A. Какой месяц короче всех?", "1. Февраль", "2. Май", "3. Октябрь"},
+                {"Б. Может ли страус назвать себя птицей?", "1. Нет, так как он не умеет говорить", "2. Нет, так как он не летает",
+                        "3. Страус не птица", "4. Да он птица", "5. Да черт его знает))"},
+                {"В. Что с земли легко поднимешь, но далеко не закинешь?","1. Песок", "2. Деревяшку", "3. Пух"},
         };
 
+        int[] correctAnswers = {1, 0, 2};
+
         do {
-            int choiceAnswer;
-            String testAnswer = null;
+            int inputAnswer;
+            String inputError;
+
             Scanner scanner = new Scanner(System.in);
-            // Вывод вопроса и вариантов ответа на экран
-            for (String[] strings : testArray) {
-                for (int j = 0; j < strings.length - 1; j++) {
-                    System.out.println(strings[j]);
-                    // этот варинат проверки не нравиться, как то колхозно, но, что то не придумал как по феншую в jave
-                    if (j+1 == strings.length - 1) {
-                        testAnswer = strings[j+1];
-                    }
+
+            for (int i = 0; i < questions.length; i++) {
+                System.out.println(questions[i]);
+                for (int j = 1; j < answerOptions[i].length; j++) {
+                    System.out.println(answerOptions[i][j]);
                 }
 
+                do {
+                    System.out.print("Ваш ответ: ");
+                    if (scanner.hasNextInt()) {
+                        inputAnswer = scanner.nextInt();
+                        if (inputAnswer < 1 | inputAnswer > answerOptions[i].length) {
+                            System.out.printf("Вы ввели число в не диапазона от 1 до %d!\n", answerOptions[i].length - 1);
+                            System.out.printf("Введите число в диапазоне от 1 до %d или <N> для завершения программы.\n",
+                                    answerOptions[i].length - 1);
+                        } else {
+                            break;
+                        }
+                    } else {
+                        inputError = scanner.next();
+                        if (inputError.equalsIgnoreCase("n")) {
+                            System.exit(0);
+                        }
+                        System.out.printf("Ошибка! Вы ввели не целое число, введите число в диапазоне от 1 до %d или " +
+                                "введите <N> для завершения программы.\n", answerOptions[i].length - 1);
+                    }
+                } while (true);
 
-                System.out.print("Ваш ответ: ");
-                // тут можно вставить проверки на правильный диапазон ответов
-                choiceAnswer = scanner.nextInt();
-
-                if (strings[choiceAnswer].equalsIgnoreCase(testAnswer)) {
+                if (inputAnswer == correctAnswers[i]) {
                     correctCount++;
                 } else {
                     wrongCount++;
                 }
-
                 System.out.println();
             }
+
             //Выводим общий результат
             System.out.println("Результат: правильно " + correctCount + ", неправильно " + wrongCount);
             System.out.println("\n\nВы хотите повторить (y/n)?");
