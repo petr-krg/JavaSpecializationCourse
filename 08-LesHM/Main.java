@@ -1,42 +1,37 @@
 package krg.petr.otusjava;
 
-import java.util.Scanner;
+// Третья версия викторины или тестера работа над замечаниями.
 
-public class QuizMain {
+import krg.petr.otusjava.interfaces.InInterface;
+import krg.petr.otusjava.interfaces.OutInterface;
 
+import java.util.Random;
+
+public class Main {
     public static void main(String[] args) {
 
-        /* for (int i = 0; i <= QuizData.questions.length - 1; i++) {
-            System.out.println(i+1 + "] " + QuizData.questions[i]);
-            for (int j = 1; j < QuizData.answerOptions[i].length; j++) {
-                System.out.println(j + ") " + QuizData.answerOptions[i][j]);
-            }
-            System.out.println("Правильный ответ: " + (QuizData.correctAnswers[i] + 1) + " " + QuizData.answerOptions[i][QuizData.correctAnswers[i]+1]);
-        } */
-        String inputRandomQuestion;
+        final int MAX_QUESTIONS = 100;
+        final int MAX_QUESTIONS_GAME = 10;
 
-        Scanner scanner = new Scanner(System.in);
+        String question;
+        String[] optionAnswers;
+        int correctAnswer;
+        int randomQuestionIndex;
 
-        QuizGame game = new QuizGame();
+        QuizDataBase dbQuiz = new QuizDataBase(); // просто хранитель массива вопросов, что бы портянку длинную мою не держать на экране
+        OutInterface print = new ConsoleOutput();
+        InInterface  inputUserAnswer = new ConsoleInput();
+        QuizElement[] qElement = new QuizElement[MAX_QUESTIONS_GAME];
 
-        System.out.print("Введите своё имя: ");
-        game.setNamePlayer(scanner.next());
-
-        System.out.printf("Введите количестов вопросов для викторины в дипазоне от %d до %d: ", game.MIN_QUESTIONS, game.MAX_QUESTIONS);
-        do {
-            if (game.setCountQustions(scanner.nextInt())) {
-                break;
-            }
-        } while (true);
-
-        System.out.print("Выводить вопросы в произволном порядке Y/N: ");
-        inputRandomQuestion = scanner.next();
-
-        if (inputRandomQuestion.equalsIgnoreCase("y")) {
-            game.setRandomQuestion(true);
+        for (int i = 0; i < MAX_QUESTIONS_GAME; i++) {
+            randomQuestionIndex = new Random().nextInt(MAX_QUESTIONS);
+            question = dbQuiz.getQuestions(randomQuestionIndex);
+            optionAnswers = dbQuiz.getAnswerOptions(randomQuestionIndex);
+            correctAnswer = dbQuiz.getCorrectAnswers(randomQuestionIndex);
+            qElement[i] = new QuizElement(question, optionAnswers, correctAnswer);
         }
 
-        game.StartQuiz();
+        Quiz quiz = new Quiz(qElement, inputUserAnswer, print);
+        quiz.start();
     }
-
 }
