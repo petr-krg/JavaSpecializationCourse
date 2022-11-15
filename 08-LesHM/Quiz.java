@@ -17,9 +17,9 @@ public class Quiz {
         int wrongAnswer = 0;
 
         for (int i = 0; i< elements.length; i++) {
-            viewBlock.printMessage(i+1 + "] " + elements[i].getQuestion() + "\n");
-            for (int j = 0; j < elements[i].getAnswersLength(); j++) {
-                viewBlock.printMessage(j+1 + ") " + elements[i].getAnswers(j) + "\n");
+            viewBlock.printMessage(i+1 + "] " + elements[i].question + "\n");
+            for (int j = 0; j < elements[i].answers.length; j++) {
+                viewBlock.printMessage(j+1 + ") " + elements[i].answers[j] + "\n");
             }
             if (elements[i].askUser()) {
                correctAnswer++;
