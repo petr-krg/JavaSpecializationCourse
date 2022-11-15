@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         final int MAX_QUESTIONS = 100;
-        final int MAX_QUESTIONS_GAME = 10;
+        final int MAX_QUESTIONS_GAME = 5;
 
         String question;
         String[] optionAnswers;
@@ -28,10 +28,10 @@ public class Main {
             question = dbQuiz.getQuestions(randomQuestionIndex);
             optionAnswers = dbQuiz.getAnswerOptions(randomQuestionIndex);
             correctAnswer = dbQuiz.getCorrectAnswers(randomQuestionIndex);
-            qElement[i] = new QuizElement(question, optionAnswers, correctAnswer);
+            qElement[i] = new QuizElement(question, optionAnswers, correctAnswer, inputUserAnswer);
         }
 
-        Quiz quiz = new Quiz(qElement, inputUserAnswer, print);
+        Quiz quiz = new Quiz(qElement, print);
         quiz.start();
     }
 }
