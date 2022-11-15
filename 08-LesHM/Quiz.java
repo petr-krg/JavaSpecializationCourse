@@ -4,21 +4,12 @@ import krg.petr.otusjava.interfaces.InInterface;
 import krg.petr.otusjava.interfaces.OutInterface;
 
 public class Quiz {
-    QuizElement[] elements;
-    InInterface inputUserAnswer;
-    OutInterface viewBlock;
+    private final QuizElement[] elements;
+    private final OutInterface viewBlock;
 
-    public Quiz(QuizElement[] quizElement, InInterface input, OutInterface output){
-        elements = quizElement;
-        inputUserAnswer = input;
-        viewBlock = output;
-    }
-
-    private boolean askUser(int lengthAnswers, int rightIndex) {
-        if (inputUserAnswer.inputUserAnswer(lengthAnswers) == rightIndex) {
-            return true;
-        }
-        return false;
+    public Quiz(QuizElement[] quizElement, OutInterface output){
+        this.elements = quizElement;
+        this.viewBlock = output;
     }
 
     public void start() {
@@ -27,11 +18,10 @@ public class Quiz {
 
         for (int i = 0; i< elements.length; i++) {
             viewBlock.printMessage(i+1 + "] " + elements[i].question + "\n");
-            //viewBlock.printMessage("Правильный ответ: " + element.rightAnswerIndex + "\n");
             for (int j = 0; j < elements[i].answers.length; j++) {
                 viewBlock.printMessage(j+1 + ") " + elements[i].answers[j] + "\n");
             }
-            if (askUser(elements[i].answers.length, elements[i].rightAnswerIndex)) {
+            if (elements[i].askUser()) {
                correctAnswer++;
             } else {
                 wrongAnswer++;
