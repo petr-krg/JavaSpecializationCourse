@@ -1,6 +1,5 @@
 package krg.petr.otusjava;
 
-import krg.petr.otusjava.interfaces.InInterface;
 import krg.petr.otusjava.interfaces.OutInterface;
 
 public class Quiz {
@@ -16,13 +15,9 @@ public class Quiz {
         int correctAnswer = 0;
         int wrongAnswer = 0;
 
-        for (int i = 0; i< elements.length; i++) {
-            viewBlock.printMessage(i+1 + "] " + elements[i].question + "\n");
-            for (int j = 0; j < elements[i].answers.length; j++) {
-                viewBlock.printMessage(j+1 + ") " + elements[i].answers[j] + "\n");
-            }
-            if (elements[i].askUser()) {
-               correctAnswer++;
+        for (QuizElement element : elements) {
+            if (element.askUser()) {
+                correctAnswer++;
             } else {
                 wrongAnswer++;
             }
