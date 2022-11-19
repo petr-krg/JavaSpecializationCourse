@@ -28,7 +28,7 @@ public class Main {
             question = dbQuiz.getQuestions(randomQuestionIndex);
             optionAnswers = dbQuiz.getAnswerOptions(randomQuestionIndex);
             correctAnswer = dbQuiz.getCorrectAnswers(randomQuestionIndex);
-            qElement[i] = new QuizElement(question, optionAnswers, correctAnswer, inputUserAnswer);
+            qElement[i] = new QuizElement((i+1) + "] " + question, optionAnswers, correctAnswer, inputUserAnswer, print);
         }
 
         Quiz quiz = new Quiz(qElement, print);
