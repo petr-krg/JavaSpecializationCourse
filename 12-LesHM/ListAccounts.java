@@ -1,18 +1,26 @@
 package krg.petr.otusjava;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ListAccounts {
     private List<BankAccount> listAccounts;
+    private Map<Integer, List<Integer>> accountsByClientID;
+   public ListAccounts() {
 
-    public ListAccounts() {
         this.listAccounts = new ArrayList<>();
+        this.accountsByClientID = new HashMap<>();
     }
 
     public void add(BankAccount account) {
+
         this.listAccounts.add(account);
+    }
+
+    public void findAccountByHashMap(BankClient client) {
+
+       String title = "[HashMap] Для клиента: " + client.getClientName();
+       List<Integer> idAccounts = this.accountsByClientID.get(client.getClientID());
+       showHashAccounts(title, idAccounts);
     }
 
     public void findAccounts(BankClient client) {
@@ -31,12 +39,63 @@ public class ListAccounts {
         showAllAccounts(title, foundList);
     }
 
+    public void fillAccountsByClientID() {
+       List<Integer> idAccounts;
+
+       for (BankAccount account : this.listAccounts) {
+           idAccounts = this.accountsByClientID.get(account.getClientID());
+           if (idAccounts == null) {
+               idAccounts = new ArrayList<>();
+               idAccounts.add(account.getAccountID());
+           } else {
+               idAccounts.add(account.getAccountID());
+           }
+           this.accountsByClientID.put(account.getClientID(), idAccounts);
+       }
+
+        System.out.println("hashMap " + this.accountsByClientID);
+/*
+       for (BankAccount account : this.listAccounts) {
+           this.accountsByClientID.computeIfAbsent(account.getClientID(), k -> new ArrayList<>()).add(account);
+       }
+*/
+    }
+
     public void updateAccount() {
 
     }
 
     public void deleteAccount() {
 
+    }
+
+    public void showHashAccounts(String title, List<Integer> foundAccounts) {
+
+        if (foundAccounts == null) {
+            System.out.printf("%n%s%n", title + " не найдено счетов!");
+            return;
+        }
+
+        String alignFormat = "| %-4d | %-4d | %-8d |%n";
+
+        System.out.printf("%n%s%n", title);
+        System.out.format("+------+------+----------+%n");
+        System.out.format("| ID   | clID | Balance  |%n");
+        System.out.format("+------+------+----------+%n");
+
+        Iterator<Integer> iterator = foundAccounts.iterator();
+        while (iterator.hasNext()) {
+            int idAccount = iterator.next();
+            for (BankAccount account : this.listAccounts) {
+                if (account.getAccountID() == idAccount) {
+                    System.out.format(alignFormat, account.getAccountID(),
+                                                   account.getClientID(),
+                                                   account.getAccountBalance());
+                }
+            }
+        }
+
+        System.out.format("+------+------+----------+%n");
     }
 
     public void showAllAccounts(String title) {
