@@ -1,0 +1,13 @@
+package krg.petr.otus.javabasic.game;
+
+public class Player {
+    private final String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
