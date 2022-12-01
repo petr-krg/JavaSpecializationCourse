@@ -1,8 +1,6 @@
 package krg.petr.otusjava;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Bank {
     public static void main( String[] args ) {
@@ -30,9 +28,12 @@ public class Bank {
         clientsList.showAllClients("Bank clients list");
         accountsList.showAllAccounts("Bank accounts list");
 
+        accountsList.fillAccountsByClientID();
+
         for (int i = 0; i < 3; i++) {
             int clientIndex = new Random().nextInt(MAX_CLIENTS);
             accountsList.findAccounts(clientsList.getClient(clientIndex));
+            accountsList.findAccountByHashMap(clientsList.getClient(clientIndex));
         }
 
     }
