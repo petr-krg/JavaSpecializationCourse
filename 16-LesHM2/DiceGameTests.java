@@ -1,5 +1,10 @@
 package krg.petr.otus.javabasic;
 
+import krg.petr.otus.javabasic.game.Player;
+import krg.petr.otus.javabasic.unit.FiftyFiftyTest;
+import krg.petr.otus.javabasic.unit.OutOfRangeTest;
+import krg.petr.otus.javabasic.unit.PlayGameTest;
+
 public class DiceGameTests {
     /*
         Заготовка для ДЗ представляет собой игру в кости.
@@ -12,7 +17,10 @@ public class DiceGameTests {
         Информацию о пройденном тесте предлагается выводить в System.out, а об упавшем в System.err
      */
     public static void main(String[] args) {
-
+        new OutOfRangeTest().testOutOfRange();
+        new FiftyFiftyTest().testFiftyFifty();
+        new PlayGameTest(new Player("Вася"), new Player("Игорь"),
+                4, 6).testPlayGame(new Player("Вася"));
     }
 
 }

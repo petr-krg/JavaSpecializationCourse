@@ -7,6 +7,18 @@ public class Assertions {
         }
     }
 
+    public static void assertMoreLessValue(int maxExpected, int minExpected, int actual) {
+        if (actual < minExpected || actual > maxExpected) {
+            throw new AssertionError(String.format("Out of range from %d to %d, actual value = %d", minExpected, maxExpected, actual));
+        }
+    }
+
+    public static void assertFiftyFifty(int firstValue, int secondValue) {
+        if (firstValue == secondValue) {
+            throw new AssertionError(String.format("Undefined result, values are equal %d  = %d", firstValue, secondValue));
+        }
+    }
+
     public static void assertEquals(long expected, long actual) {
         if (expected != actual) {
             throw new AssertionError(String.format("Expected %d = %d", expected, actual));
