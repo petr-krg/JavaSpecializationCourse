@@ -17,7 +17,10 @@ public class DiceGameTests {
         Информацию о пройденном тесте предлагается выводить в System.out, а об упавшем в System.err
      */
     public static void main(String[] args) {
-
+        new OutOfRangeTest().testOutOfRange();
+        new FiftyFiftyTest().testFiftyFifty();
+        new PlayGameTest(new Player("Вася"), new Player("Игорь"),
+                4, 6).testPlayGame(new Player("Вася"));
     }
 
 }
