@@ -8,10 +8,12 @@ public class ListClients {
     private List<BankClient> listClients;
 
     public ListClients() {
+
         this.listClients = new ArrayList<>();
     }
 
     public void add(BankClient client) {
+
         this.listClients.add(client);
     }
 
@@ -24,6 +26,7 @@ public class ListClients {
     }
 
     public int getClientID(int elementIndex) {
+
         return this.listClients.get(elementIndex).getClientID();
     }
 
