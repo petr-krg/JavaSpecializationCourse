@@ -18,4 +18,16 @@ public class ResourceWork {
           String firstString = reader.readLine();
           return firstString;
   }
+
+    public void WorkWithResource() {
+        SameResource resSame = null;
+        try {
+            resSame = new SameResource();
+            resSame.execute();
+        } finally {
+            if (resSame != null) {
+                resSame.close();
+            }
+        }
+    }
 }
