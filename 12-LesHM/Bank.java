@@ -29,11 +29,17 @@ public class Bank {
         accountsList.showAllAccounts("Bank accounts list");
 
         accountsList.fillAccountsByClientID();
+        clientsList.fillClientsByAccountID(accountsList.getListAccounts());
 
         for (int i = 0; i < 3; i++) {
             int clientIndex = new Random().nextInt(MAX_CLIENTS);
             accountsList.findAccounts(clientsList.getClient(clientIndex));
             accountsList.findAccountByHashMap(clientsList.getClient(clientIndex));
+        }
+
+        for (int i = 0; i < 3; i++) {
+            int accountIndex = new Random().nextInt(MAX_CLIENTS);
+            clientsList.findClientByAccount(accountsList.getListAccounts().get(accountIndex));
         }
 
     }
